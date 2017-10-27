@@ -7,35 +7,30 @@
 
 #include "Gpio.h"
 
-uint32_t *gpioGMode = (uint32_t *)(GPIOG_BASE_ADDR + GPIO_MODE_OFF);
-uint32_t *gpioGOType = (uint32_t *)(GPIOG_BASE_ADDR + GPIO_OTYPE_OFF);
-uint32_t *gpioGOSpeed = (uint32_t *)(GPIOG_BASE_ADDR + GPIO_OSPEED_OFF);
-uint32_t *gpioGPupd = (uint32_t *)(GPIOG_BASE_ADDR + GPIO_PUPD_OFF);
-uint32_t *gpioGOD = (uint32_t *)(GPIOG_BASE_ADDR + GPIO_OD_OFF);
 
 void gpioGConfig(int pin, int mode, int outDriveType, int pullType, int speed)
 {
-	*gpioGMode &= ~(3 << (pin * 2)); 	//Clear pin mode to 0 first
-	*gpioGMode |= mode << (pin * 2);	//Set the pin mode
+	GpioG->mode &= ~(3 << (pin * 2)); 	//Clear pin mode to 0 first
+	GpioG->mode |= mode << (pin * 2);	//Set the pin mode
 
-	*gpioGOSpeed &= ~(3 << (pin * 2));	//Clear pin speed to 0
-	*gpioGOSpeed |= speed << (pin * 2);	//Set the pin speed
+	GpioG->outSpeed &= ~(3 << (pin * 2));	//Clear pin speed to 0
+	GpioG->outSpeed |= speed << (pin * 2);	//Set the pin speed
 
-	*gpioGPupd &= ~(3 << (pin * 2));
-	*gpioGPupd |= pullType << (pin * 2);	//Set pin pull type
+	GpioG->pullType &= ~(3 << (pin * 2));
+	GpioG->pullType |= pullType << (pin * 2);	//Set pin pull type
 
-	*gpioGOType &= ~(1 << pin);
-	*gpioGOType |= outDriveType << pin;
+	GpioG->outType &= ~(1 << pin);
+	GpioG->outType |= outDriveType << pin;
 }
 
 void gpioGWrite(int pin, int state)
 {
 	if(state == 1)
 	{
-		*gpioGOD |= 1 << pin;
+		GpioG->outData |= 1 << pin;
 	}
 	else
 	{
-		*gpioGOD &= ~(1 << pin);
+		GpioG->outData &= ~(1 << pin);
 	}
 }
