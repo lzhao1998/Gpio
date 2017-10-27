@@ -14,3 +14,15 @@ void enableGpioG(void)
 	*rccAhb1Rst &= ~(1 << 6);
 	*rccAhb1En |= 1 << 6;
 }
+
+void enableGpioA(void)
+{
+	*rccAhb1Rst &= ~1;
+	*rccAhb1En |= 1 << 6;
+}
+
+void enableGpioB(void)
+{
+	*rccAhb1Rst &= ~(1 << 1);
+	*rccAhb1En |= 1 << 6;
+}
