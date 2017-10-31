@@ -25,11 +25,13 @@ void gpioWrite(GpioReg *gpio, int pin, int state)
 {
 	if(state == 1)
 	{
-		gpio->outData |= 1 << pin;
+		SET_PIN(gpio,pin);
+		//gpio->outData |= 1 << pin;
 	}
 	else
 	{
-		gpio->outData &= ~(1 << pin);
+		RESET_PIN(gpio,pin);
+		//gpio->outData &= ~(1 << pin);
 	}
 }
 
@@ -51,16 +53,29 @@ void gpioGConfig(int pin, int mode, int outDriveType, int pullType, int speed)
 
 	GpioG->outType &= ~(1 << pin);
 	GpioG->outType |= outDriveType << pin;
+
+
 }
 
 void gpioGWrite(int pin, int state)
 {
 	if(state == 1)
 	{
-		GpioG->outData |= 1 << pin;
+		SET_PIN(GpioG,pin);
+		//GpioG->outData |= 1 << pin;
 	}
 	else
 	{
-		GpioG->outData &= ~(1 << pin);
+		RESET_PIN(GpioG,pin);
+		//GpioG->outData &= ~(1 << pin);
 	}
+}
+
+void gpioLock(GpioReg *gpio, int pin)
+{
+	int lockStatus;
+	gpio->lock = (1<<16)|(1<<pin);
+	gpio->lock = (0<<16)|(1<<pin);
+	gpio->lock = (1<<16)|(1<<pin);
+	lockStatus = gpio->lock;
 }

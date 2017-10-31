@@ -6,6 +6,7 @@
 C_SRCS += \
 ../Src/Gpio.c \
 ../Src/Rcc.c \
+../Src/Rng.c \
 ../Src/main.c \
 ../Src/stm32f4xx_hal_msp.c \
 ../Src/stm32f4xx_it.c \
@@ -14,6 +15,7 @@ C_SRCS += \
 OBJS += \
 ./Src/Gpio.o \
 ./Src/Rcc.o \
+./Src/Rng.o \
 ./Src/main.o \
 ./Src/stm32f4xx_hal_msp.o \
 ./Src/stm32f4xx_it.o \
@@ -22,6 +24,7 @@ OBJS += \
 C_DEPS += \
 ./Src/Gpio.d \
 ./Src/Rcc.d \
+./Src/Rng.d \
 ./Src/main.d \
 ./Src/stm32f4xx_hal_msp.d \
 ./Src/stm32f4xx_it.d \

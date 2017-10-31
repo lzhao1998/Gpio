@@ -26,3 +26,9 @@ void enableGpioB(void)
 	*rccAhb1Rst &= ~(1 << 1);
 	*rccAhb1En |= 1 << 6;
 }
+
+void enableRng(void)
+{
+	Rcc->AHB2RSTR &= ~(1 << 6);
+	Rcc->AHB2ENR |= 1<< 6;
+}

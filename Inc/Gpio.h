@@ -37,7 +37,8 @@ struct GpioReg {
 	volatile uint32_t pullType;			//ch
 	volatile uint32_t inData;			//10h
 	volatile uint32_t outData;			//14h
-	volatile uint32_t bitData;			//18h
+	//volatile uint32_t bitData;
+	volatile uint32_t bsr;			//18h
 	volatile uint32_t lock;				//1ch
 	volatile uint32_t altFuncLo;		//20h
 	volatile uint32_t altFuncHi;		//24h
@@ -64,6 +65,10 @@ struct GpioReg {
 #define GPIO_PULL_UP		1
 #define GPIO_PULL_DOWN		2
 
+//Pin set and reset
+#define SET_PIN(gpio,pinNum)	(gpio->bsr = (1 << pinNum))
+#define RESET_PIN(gpio,pinNum)	(gpio->bsr = (1 << (16 + pinNum)))
+
 //Export variables to other modules
 extern uint32_t *gpioGMode;
 extern uint32_t *gpioGOType;
@@ -77,5 +82,8 @@ int gpioRead(GpioReg *gpio, int pin);
 
 void gpioGConfig(int pin, int mode, int outDriveType, int pullType, int speed);
 void gpioGWrite(int pin, int state);
+void gpioLock(GpioReg *gpio, int pin);
+
+
 
 #endif /* GPIO_H_ */
