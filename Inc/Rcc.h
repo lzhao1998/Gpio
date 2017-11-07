@@ -51,6 +51,29 @@ struct RccReg {
 extern uint32_t *rccAhb1Rst;
 extern uint32_t *rccAhb1En;
 
+//MCO clock select
+#define MCO_HSI_SRC		0
+#define MCO_LSE_SRC		1
+#define MCO_HSE_SRC		2
+#define MCO_PLL_SRC		3
+
+//MCO Prescale
+#define MCO_NO_DIV		0
+#define MCO_DIV_BY_2	4
+#define MCO_DIV_BY_3	5
+#define MCO_DIV_BY_4	6
+#define MCO_DIV_BY_5	7
+
+#define rccSelectMco1Src(x)		{	\
+	Rcc->CFGR &= ~(3 << 21);		\
+	Rcc->CFGR |= (x << 21);			\
+}
+
+#define rccSetMco1Prescaler(x)	{	\
+	Rcc->CFGR &= ~(7 << 24);		\
+	Rcc->CFGR |= (x << 24);			\
+}
+
 void enableGpioG(void);
 void enableGpioA(void);
 void enableGpioB(void);
