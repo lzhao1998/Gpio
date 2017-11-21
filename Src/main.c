@@ -46,6 +46,8 @@
 #include "Nvic.h"
 #include "SysTick.h"
 #include "EXTI.h"
+#include "Timer.h"
+#include "DbgMcu.h"
 #include <stdio.h>
 
 #define greenLedPin		13
@@ -125,7 +127,7 @@ int main(void)
   enableGpioG();
 
   //Enable random number generator
-  enableRng();
+  /*enableRng();*/
 
   //Enable RNG & HASH interrupt
   /*nvicEnableIrq(80);
@@ -142,29 +144,38 @@ int main(void)
 
   //Configure GPIOA pin 8 as MCO1 (push-pull with no-pull at very
   //high speed output)
-  gpioConfig(GpioA,8,GPIO_MODE_AF,GPIO_PUSH_PULL,GPIO_NO_PULL,GPIO_HI_SPEED);
+  /*gpioConfig(GpioA,8,GPIO_MODE_AF,GPIO_PUSH_PULL,GPIO_NO_PULL,GPIO_HI_SPEED);
   gpioConfigAltFunc(GpioA,8,AF0);
   rccSelectMco1Src(MCO_HSE_SRC);
-  rccSetMco1Prescaler(MCO_DIV_BY_5);
+  rccSetMco1Prescaler(MCO_DIV_BY_5);*/
 
   //EXTI
-  nvicEnableIrq(6); //enable EXTI in nvic which is in position 6
+  /*nvicEnableIrq(6); //enable EXTI in nvic which is in position 6
   nvicSetPriority(6,4);
   EXTI_INTR_UNMASK(blueButtonPin);
   EXTI_FTSR_ENABLE(blueButtonPin);
-  EXTI_RTSR_DISABLE(blueButtonPin);
+  EXTI_RTSR_DISABLE(blueButtonPin);*/
 
+  //enable timer8
+  wait500ms();
+  haltTimer8WhenDebugging();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  gpioWrite(GpioG, redLedPin,1);
-	  __WFI();
-	  gpioWrite(GpioG, redLedPin,0);
-	  __WFI();
-	  gpioWrite(GpioG, greenLedPin,0);
+	gpioWrite(GpioG, redLedPin,1);
+	waitTimer500ms();
+	gpioWrite(GpioG, redLedPin,0);
+	waitTimer500ms();
+
+	//gpioWrite(GpioG, redLedPin,1);
+	//__WFI();
+	//gpioWrite(GpioG, redLedPin,0);
+	//__WFI();
+	//gpioWrite(GpioG, greenLedPin,0);
+
 	  //int num = getRandomNumber();
 	 // printf("(%d) 0x%x \n",i++,num);
 	  /*
@@ -292,7 +303,15 @@ static void MX_GPIO_Init(void)
 
 }
 
+
 /* USER CODE BEGIN 4 */
+void waitTimer500ms(void)
+{
+	while(!((Timer8->SR) & 0x01))
+	{}
+	Timer8->SR &= ~(0x01);
+}
+
 void My_SysTick_Handler(void)
 {
 	static int ledState = 0;

@@ -74,10 +74,15 @@ extern uint32_t *rccAhb1En;
 	Rcc->CFGR |= (x << 24);			\
 }
 
+//enable timer8
+void enableTimer8(void);
+
+//enable gpio
 void enableGpioG(void);
 void enableGpioA(void);
 void enableGpioB(void);
 
+//enable rng
 void enableRng(void);
 
 #endif /* RCC_H_ */
