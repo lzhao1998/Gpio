@@ -48,6 +48,8 @@
 #include "EXTI.h"
 #include "Timer.h"
 #include "DbgMcu.h"
+#include "I2C.h"
+#include "flash.h"
 #include <stdio.h>
 
 #define greenLedPin		13
@@ -124,6 +126,8 @@ int main(void)
 
   //Enable Gpio
   enableGpioA();
+  enableGpioB();
+  enableGpioF();
   enableGpioG();
 
   //Enable random number generator
@@ -137,9 +141,9 @@ int main(void)
   /*getRandomNumberByInterrupt();*/
 
   //Configure the Gpio
-  gpioConfig(GpioA, blueButtonPin, GPIO_MODE_IN, 0, GPIO_NO_PULL, 0);
+  /*gpioConfig(GpioA, blueButtonPin, GPIO_MODE_IN, 0, GPIO_NO_PULL, 0);
   gpioConfig(GpioG, redLedPin, GPIO_MODE_OU, GPIO_PUSH_PULL, GPIO_NO_PULL, GPIO_HI_SPEED);
-  gpioConfig(GpioG, greenLedPin, GPIO_MODE_OU, GPIO_PUSH_PULL, GPIO_NO_PULL, GPIO_LOW_SPEED);
+  gpioConfig(GpioG, greenLedPin, GPIO_MODE_OU, GPIO_PUSH_PULL, GPIO_NO_PULL, GPIO_LOW_SPEED);*/
 
 
   //Configure GPIOA pin 8 as MCO1 (push-pull with no-pull at very
@@ -149,6 +153,12 @@ int main(void)
   rccSelectMco1Src(MCO_HSE_SRC);
   rccSetMco1Prescaler(MCO_DIV_BY_5);*/
 
+  //I2C
+  /*initI2C();
+
+  haltI2C1WhenDebug();
+  haltI2C2WhenDebug();*/
+
   //EXTI
   /*nvicEnableIrq(6); //enable EXTI in nvic which is in position 6
   nvicSetPriority(6,4);
@@ -157,18 +167,34 @@ int main(void)
   EXTI_RTSR_DISABLE(blueButtonPin);*/
 
   //enable timer8
-  wait500ms();
-  haltTimer8WhenDebugging();
+  /*wait500ms();
+  haltTimer8WhenDebugging();*/
   /* USER CODE END 2 */
+
+  //FLASH.
+  flashEnableProgramming(BYTE_SIZE);
+  writeMessage("HELLO WORLD!",(char*)0x08100000);
+  if((flashEraseSection(12)) == 1)
+  {
+	  flashEraseSection(13);
+	 // flashEnableProgramming(BYTE_SIZE);
+	  writeMessage("HELLO WORLD!",(char *)0x08084000);
+	  flashDisable();
+	  while(1);
+  }
+  else
+  {
+	  while(1);
+  }
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	gpioWrite(GpioG, redLedPin,1);
+	/*gpioWrite(GpioG, redLedPin,1);		//for timer8
 	waitTimer500ms();
 	gpioWrite(GpioG, redLedPin,0);
-	waitTimer500ms();
+	waitTimer500ms();*/
 
 	//gpioWrite(GpioG, redLedPin,1);
 	//__WFI();

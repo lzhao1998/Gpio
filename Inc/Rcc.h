@@ -64,6 +64,11 @@ extern uint32_t *rccAhb1En;
 #define MCO_DIV_BY_4	6
 #define MCO_DIV_BY_5	7
 
+//I2C
+#define I2C1_EN	21
+#define I2C2_EN	22
+#define I2C3_EN	23
+
 #define rccSelectMco1Src(x)		{	\
 	Rcc->CFGR &= ~(3 << 21);		\
 	Rcc->CFGR |= (x << 21);			\
@@ -81,8 +86,12 @@ void enableTimer8(void);
 void enableGpioG(void);
 void enableGpioA(void);
 void enableGpioB(void);
+void enableGpioF(void);
 
 //enable rng
 void enableRng(void);
+
+//enable i2c
+void enablei2c(int num);
 
 #endif /* RCC_H_ */

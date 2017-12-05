@@ -27,6 +27,12 @@ void enableGpioB(void)
 	*rccAhb1En |= 1 << 6;
 }
 
+void enableGpioF(void)
+{
+	*rccAhb1Rst &= ~(1 << 5);
+	*rccAhb1En |= 1 << 6;		//set to << 5?
+}
+
 void enableRng(void)
 {
 	Rcc->AHB2RSTR &= ~(1 << 6);
@@ -37,4 +43,10 @@ void enableTimer8(void)
 {
 	Rcc->APB2RSTR &= ~(1<<1);
 	Rcc->APB2ENR  |= 1 << 1;
+}
+
+void enablei2c(int num)
+{
+	Rcc->APB1RSTR &= ~(1 << num);
+	Rcc->APB1ENR |= (1 << num);
 }
