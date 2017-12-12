@@ -94,4 +94,8 @@ void enableRng(void);
 //enable i2c
 void enablei2c(int num);
 
+//enable and disable usart1
+void enableUsart1(void);
+void disableUsart1(void);
+
 #endif /* RCC_H_ */

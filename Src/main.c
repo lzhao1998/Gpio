@@ -50,6 +50,7 @@
 #include "DbgMcu.h"
 #include "I2C.h"
 #include "flash.h"
+#include "usart.h"
 #include <stdio.h>
 
 #define greenLedPin		13
@@ -125,10 +126,10 @@ int main(void)
   sysTickDisable();
 
   //Enable Gpio
-  enableGpioA();
+  /*enableGpioA();
   enableGpioB();
   enableGpioF();
-  enableGpioG();
+  enableGpioG();*/
 
   //Enable random number generator
   /*enableRng();*/
@@ -153,11 +154,13 @@ int main(void)
   rccSelectMco1Src(MCO_HSE_SRC);
   rccSetMco1Prescaler(MCO_DIV_BY_5);*/
 
+
   //I2C
   /*initI2C();
 
   haltI2C1WhenDebug();
   haltI2C2WhenDebug();*/
+
 
   //EXTI
   /*nvicEnableIrq(6); //enable EXTI in nvic which is in position 6
@@ -166,13 +169,15 @@ int main(void)
   EXTI_FTSR_ENABLE(blueButtonPin);
   EXTI_RTSR_DISABLE(blueButtonPin);*/
 
+
   //enable timer8
   /*wait500ms();
   haltTimer8WhenDebugging();*/
   /* USER CODE END 2 */
 
+
   //FLASH.
-  flashEnableProgramming(BYTE_SIZE);
+  /*flashEnableProgramming(BYTE_SIZE);
   writeMessage("HELLO WORLD!",(char*)0x08100000);
   if((flashEraseSection(12)) == 1)
   {
@@ -185,12 +190,43 @@ int main(void)
   else
   {
 	  while(1);
-  }
+  }*/
+
+  //USART1
+  enableGpioA();
+  gpioConfig(GpioA,9,GPIO_MODE_AF,GPIO_PUSH_PULL,GPIO_PULL_UP,GPIO_HI_SPEED);
+  gpioConfigAltFunc(GpioA,9,AF7);	//enable pin PA9 for transmit data
+  gpioConfig(GpioA,10,GPIO_MODE_AF,GPIO_PUSH_PULL,GPIO_PULL_UP,GPIO_HI_SPEED);
+  gpioConfigAltFunc(GpioA,10,AF7);	//enable pin PA10 for receive data
+
+  enableUsart1();			//Enable usart
+  configureUsart1();		//Configure the Usart
+  setBaudRate(0x30,0xd); 	//Set baud rate to 115200 and freq is 90MHz
+  enableTransmit();			//Enable transmit data
+  enableReceive();			//Enable receive data
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  writeData("H");
+	  writeData("S");
+	 /* writeData("H");
+	  writeData("E");
+	  writeData("L");
+	  writeData("L");
+	  writeData("O");
+	  writeData(" ");
+	  writeData("W");
+	  writeData("O");
+	  writeData("R");
+	  writeData("L");
+	  writeData("D");
+	  writeData("!");
+	  writeData("\n");
+	  writeData("\n");*/
+
+
 	/*gpioWrite(GpioG, redLedPin,1);		//for timer8
 	waitTimer500ms();
 	gpioWrite(GpioG, redLedPin,0);

@@ -81,8 +81,8 @@ void gpioLock(GpioReg *gpio, int pin)
 }
 
 void gpioConfigAltFunc(GpioReg *gpio,int pin,int AltFun){
-	 if(pin<7)
-		 gpio->altFuncLo =  AltFun << (pin*4);
+	 if(pin<8)
+		 gpio->altFuncLo |=  AltFun << (pin*4);
 	 else
-		 gpio->altFuncHi = AltFun << (pin*4);
+		 gpio->altFuncHi |= AltFun << ((pin-8)*4 );
 }

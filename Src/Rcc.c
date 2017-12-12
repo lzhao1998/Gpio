@@ -50,3 +50,14 @@ void enablei2c(int num)
 	Rcc->APB1RSTR &= ~(1 << num);
 	Rcc->APB1ENR |= (1 << num);
 }
+
+void enableUsart1(void)
+{
+	Rcc->APB2RSTR &= ~(1 << 4);
+	Rcc->APB2ENR |= (1 << 4);
+}
+
+void disableUsart1(void)
+{
+	Rcc->APB2RSTR &= ~(1 << 4);
+}
