@@ -98,4 +98,8 @@ void enablei2c(int num);
 void enableUsart1(void);
 void disableUsart1(void);
 
+//enable and disable DMA1,DMA2
+void enableDMA1andDMA2(void);
+void disableDMA1andDMA2(void);
+
 #endif /* RCC_H_ */

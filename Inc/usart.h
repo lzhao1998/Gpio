@@ -8,6 +8,7 @@
 #ifndef USART_H_
 #define USART_H_
 
+#include "DbgMcu.h"
 #include <stdint.h>
 #define USART1_BASE_ADDR		0x40011000
 #define Usart1				((UsartReg *)(USART1_BASE_ADDR))
@@ -48,8 +49,8 @@ struct UsartReg {
 #define ENABLE_TRANSMIT		(1 << 3)
 
 //CR1 configure Receiver Enable
-#define DISABLE_RECEIVE	(0 << 3)
-#define ENABLE_RECEIVE	(1 << 3)
+#define DISABLE_RECEIVE	(0 << 2)
+#define ENABLE_RECEIVE	(1 << 2)
 
 //CR2 configure Stop bits
 #define STOP_BIT_05		(0x00 << 12)
@@ -59,8 +60,10 @@ struct UsartReg {
 
 void configureUsart1(void);
 void setBaudRate(int mantissa, int fraction);
-void enableTransmit(void);
-void enableReceive(void);
+void enableTransmit();
+void enableReceive();
 void writeData(char *data);
+uint8_t ReceiveByte();
+void stringReceive(char *message);
 
 #endif /* USART_H_ */

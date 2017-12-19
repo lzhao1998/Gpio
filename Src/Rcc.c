@@ -61,3 +61,16 @@ void disableUsart1(void)
 {
 	Rcc->APB2RSTR &= ~(1 << 4);
 }
+
+void enableDMA1andDMA2(void)
+{
+	Rcc->AHB1RSTR &= ~(0x11 << 21);
+	Rcc->AHB1ENR |= (0x11 << 21);
+}
+
+void disableDMA1andDMA2(void)
+{
+	Rcc->AHB1RSTR |= (0x11 << 21);
+	Rcc->AHB1ENR &= ~(0x11 << 21);
+}
+

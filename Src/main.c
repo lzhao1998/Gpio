@@ -52,6 +52,8 @@
 #include "flash.h"
 #include "usart.h"
 #include <stdio.h>
+#include <string.h>
+#include "stdint.h"
 
 #define greenLedPin		13
 #define redLedPin		14
@@ -123,7 +125,7 @@ int main(void)
   sysTickPrescaledSpeed();
   sysTickClrCounter();
   sysTickEnable();*/
-  sysTickDisable();
+  //sysTickDisable();
 
   //Enable Gpio
   /*enableGpioA();
@@ -194,10 +196,15 @@ int main(void)
 
   //USART1
   enableGpioA();
+  enableGpioG();
   gpioConfig(GpioA,9,GPIO_MODE_AF,GPIO_PUSH_PULL,GPIO_PULL_UP,GPIO_HI_SPEED);
   gpioConfigAltFunc(GpioA,9,AF7);	//enable pin PA9 for transmit data
   gpioConfig(GpioA,10,GPIO_MODE_AF,GPIO_PUSH_PULL,GPIO_PULL_UP,GPIO_HI_SPEED);
   gpioConfigAltFunc(GpioA,10,AF7);	//enable pin PA10 for receive data
+  gpioConfig(GpioG, redLedPin, GPIO_MODE_OU, GPIO_PUSH_PULL, GPIO_NO_PULL, GPIO_HI_SPEED);	//enable red led
+  gpioConfig(GpioG,greenLedPin, GPIO_MODE_OU, GPIO_PUSH_PULL, GPIO_NO_PULL, GPIO_HI_SPEED); //enable green led
+  gpioConfig(GpioA,8, GPIO_MODE_AF, GPIO_PUSH_PULL, GPIO_NO_PULL,GPIO_HI_SPEED );
+  gpioConfigAltFunc(GpioA,8,AF8);
 
   enableUsart1();			//Enable usart
   configureUsart1();		//Configure the Usart
@@ -205,13 +212,51 @@ int main(void)
   enableTransmit();			//Enable transmit data
   enableReceive();			//Enable receive data
 
+  int temp;
+  char *message = (char*)malloc(sizeof(char) * 100);
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  writeData("H");
-	  writeData("S");
+	  stringReceive(&message);
+	  // turn on = on led
+	  // turn off = off led
+	  // blink = blink led 1 time
+	  if(strcmp("turn on", &message) == 0){
+		  temp = 1;
+	  	  }
+	  else if(strcmp("turn off", &message) == 0){
+		  temp = 2;
+	  	  }
+	  else if(strcmp("blink", &message) == 0){
+		  temp = 3;
+	  }
+	  else
+	  {
+		  temp = 4;
+	  }  // off led
+
+	  switch(temp)
+	  {
+	  case 1:
+		  	  gpioWrite(GpioG,greenLedPin,1);
+		  	  break;
+	  case 2:
+		  	  gpioWrite(GpioG,greenLedPin,0);
+		  	  break;
+	  case 3:
+		  	 gpioWrite(GpioG,greenLedPin,0);
+		  	 HAL_Delay(250);
+		  	 gpioWrite(GpioG,greenLedPin,1);
+		  	 HAL_Delay(250);
+		  	 gpioWrite(GpioG,greenLedPin,0);
+		  	  break;
+	  default:gpioWrite(GpioG,greenLedPin,0);
+	  }
 	 /* writeData("H");
+	  writeData("S");
+	  writeData("H");
 	  writeData("E");
 	  writeData("L");
 	  writeData("L");
