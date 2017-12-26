@@ -27,6 +27,12 @@ void enableGpioB(void)
 	*rccAhb1En |= 1 << 6;
 }
 
+void enableGpioC(void)
+{
+	*rccAhb1Rst &= ~(1 << 2);
+	*rccAhb1En |= 1 << 2;
+}
+
 void enableGpioF(void)
 {
 	*rccAhb1Rst &= ~(1 << 5);

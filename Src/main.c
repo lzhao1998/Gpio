@@ -199,11 +199,11 @@ int main(void)
   }*/
 
   //DMA
-  enableDMA(DMA2_DEV);
-  initDmaForUsart1();
+  /*enableDMA(DMA2_DEV);
+  initDmaForUsart1();*/
 
   //USART1
-  enableGpioA();
+  /*enableGpioA();
   enableGpioG();
   gpioConfig(GpioA,9,GPIO_MODE_AF,GPIO_PUSH_PULL,GPIO_PULL_UP,GPIO_HI_SPEED);
   gpioConfigAltFunc(GpioA,9,AF7);	//enable pin PA9 for transmit data
@@ -222,13 +222,28 @@ int main(void)
   enableReceive();			//Enable receive data
 
   int temp;
-  char *message = (char*)malloc(sizeof(char) * 100);
+  char *message = (char*)malloc(sizeof(char) * 100);*/
+
+  //Timer8 (input capture and output compare)
+  enableDMA(DMA2_DEV);
+  initDmaForTimer8();
+  enableGpioC();
+  gpioConfig(GpioC,6, GPIO_MODE_AF, GPIO_PUSH_PULL, GPIO_NO_PULL,GPIO_VHI_SPEED );
+  gpioConfigAltFunc(GpioC,6,AF3);//for timer8 ch1(for output compare)
+  gpioConfig(GpioC,8, GPIO_MODE_AF, GPIO_PUSH_PULL, GPIO_NO_PULL,GPIO_VHI_SPEED );
+  gpioConfigAltFunc(GpioC,8,AF3);//for timer8 ch3(for input compare)
+  gpioConfig(GpioC,9, GPIO_MODE_AF, GPIO_PUSH_PULL, GPIO_NO_PULL,GPIO_VHI_SPEED );
+  gpioConfigAltFunc(GpioC,9,AF3);//for timer8 ch4(for input compare)
+  //initTimer8ForInputCaptureAndOutputCompare();
+  initTimer8ForDMA();
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  serialPrint("value : %d%s\n",486," tuturu~" );
+
+	 // toggleOutCompareChannel1WithForce(0);
+	  //serialPrint("value : %d%s\n",486," tuturu~" );
 	 /* stringReceive(&message);
 	  // turn on = on led
 	  // turn off = off led

@@ -11,6 +11,7 @@
 #include <stdint.h>
 #include "Rcc.h"
 #include "usart.h"
+#include "Timer.h"
 
 #define DMA1_BASE_ADDR		0x40026000
 #define DMA2_BASE_ADDR		0x40026400

@@ -71,6 +71,17 @@ void initDmaForUsart1()
 
 }
 
+void initDmaForTimer8()
+{
+	dma2->S[2].CR &= ~(stream_enable);
+	dma2->S[2].CR = channel7 | vhigh_prio | Memory_to_peripheral | DMA_flow_counter | Psize_half_word | Msize_half_word | Mburst_incr4 | \
+			Pburst_single | (0 << 15) | (0 << 9) | (1 << 10);
+	dma2->S[2].FCR = full_fifo;
+	dma2->S[2].NDTR = 2;
+	dma2->S[2].PAR = &(Timer8->CCR1);
+	dma2->S[2].CR |= (stream_enable);
+}
+
 void dmaSetAddressesAndSize(uint32_t memoryAddr, uint32_t peripheralAddr, uint32_t size)
 {
 

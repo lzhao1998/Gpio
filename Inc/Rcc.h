@@ -92,6 +92,7 @@ void enableTimer8(void);
 void enableGpioG(void);
 void enableGpioA(void);
 void enableGpioB(void);
+void enableGpioC(void);
 void enableGpioF(void);
 
 //enable rng
