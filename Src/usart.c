@@ -80,3 +80,26 @@ void stringReceive(char *message){
 	}
 	*message=0;
 }
+
+void UsartDmaTxEn()
+{
+	Usart1->CR3 |= UART_DMA_TX_EN;
+}
+
+void serialPrint(char *format, ...)
+{
+	va_list args;
+	char *buffer;
+	int i,length;
+
+	va_start(args,format);
+	length = vsnprintf(buffer,0,format,args);
+	buffer = malloc(length + 1);
+	vsnprintf(buffer, length + 1, format, args);
+
+	for(i = 0; i < length + 1; i++)
+	{
+		writeData(&buffer[i]);
+	}
+
+}

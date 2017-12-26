@@ -9,6 +9,8 @@
 #define RCC_H_
 
 #include <stdint.h>
+#include "Common.h"
+
 #define RCC_BASE_ADDR		0x40023800
 #define RCC_AHB1RST_OFF		0x10
 #define RCC_AHB1EN_OFF		0x30
@@ -69,6 +71,10 @@ extern uint32_t *rccAhb1En;
 #define I2C2_EN	22
 #define I2C3_EN	23
 
+//DMA
+#define DMA1_DEV	0
+#define DMA2_DEV	1
+
 #define rccSelectMco1Src(x)		{	\
 	Rcc->CFGR &= ~(3 << 21);		\
 	Rcc->CFGR |= (x << 21);			\
@@ -99,7 +105,7 @@ void enableUsart1(void);
 void disableUsart1(void);
 
 //enable and disable DMA1,DMA2
-void enableDMA1andDMA2(void);
+void enableDMA(int dmaNumber);
 void disableDMA1andDMA2(void);
 
 #endif /* RCC_H_ */

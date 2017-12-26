@@ -61,11 +61,16 @@ void disableUsart1(void)
 {
 	Rcc->APB2RSTR &= ~(1 << 4);
 }
-
-void enableDMA1andDMA2(void)
+/*
+ * Enable and clock DMA
+ * @param dmaNumber is one if the following:
+ * 							DMA1_DEV
+ * 							DMA2_DEV
+ */
+void enableDMA(int dmaNumber)
 {
-	Rcc->AHB1RSTR &= ~(0x11 << 21);
-	Rcc->AHB1ENR |= (0x11 << 21);
+	Rcc->AHB1RSTR &= ~(1 << (21 + dmaNumber));
+	Rcc->AHB1ENR |= (1 << (21 + dmaNumber));
 }
 
 void disableDMA1andDMA2(void)

@@ -4,6 +4,7 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../Src/Dma.c \
 ../Src/Flash.c \
 ../Src/Gpio.c \
 ../Src/I2C.c \
@@ -17,6 +18,7 @@ C_SRCS += \
 ../Src/usart.c 
 
 OBJS += \
+./Src/Dma.o \
 ./Src/Flash.o \
 ./Src/Gpio.o \
 ./Src/I2C.o \
@@ -30,6 +32,7 @@ OBJS += \
 ./Src/usart.o 
 
 C_DEPS += \
+./Src/Dma.d \
 ./Src/Flash.d \
 ./Src/Gpio.d \
 ./Src/I2C.d \

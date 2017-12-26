@@ -10,6 +10,8 @@
 
 #include "DbgMcu.h"
 #include <stdint.h>
+#include <stdarg.h>
+
 #define USART1_BASE_ADDR		0x40011000
 #define Usart1				((UsartReg *)(USART1_BASE_ADDR))
 
@@ -58,6 +60,10 @@ struct UsartReg {
 #define STOP_BIT_15		(0x11 << 12)
 #define STOP_BIT_20		(0x10 << 12)
 
+//CR3
+#define UART_DMA_TX_EN	(1 << 7)
+#define UART_DMA_Rx_EN	(1 << 6)
+
 void configureUsart1(void);
 void setBaudRate(int mantissa, int fraction);
 void enableTransmit();
@@ -65,5 +71,7 @@ void enableReceive();
 void writeData(char *data);
 uint8_t ReceiveByte();
 void stringReceive(char *message);
+void UsartDmaTxEn();
+void serialPrint(char *format, ...);
 
 #endif /* USART_H_ */

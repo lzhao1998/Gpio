@@ -51,9 +51,12 @@
 #include "I2C.h"
 #include "flash.h"
 #include "usart.h"
+#include "Dma.h"
 #include <stdio.h>
 #include <string.h>
-#include "stdint.h"
+#include <stdlib.h>
+#include <stdint.h>
+#include <stm32f4xx.h>
 
 #define greenLedPin		13
 #define redLedPin		14
@@ -85,7 +88,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-	//int i = 0;
+	volatile int i = 0;
 	initialise_monitor_handles();
   /* USER CODE END 1 */
 
@@ -110,6 +113,7 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
   printf("HELLO WORLD!\n");
+  //i = dataStreamHasTransferCompleted(dma2,3);
 
   //NVIC
  /* //Enable I2C1_Event Interrupt
@@ -194,6 +198,10 @@ int main(void)
 	  while(1);
   }*/
 
+  //DMA
+  enableDMA(DMA2_DEV);
+  initDmaForUsart1();
+
   //USART1
   enableGpioA();
   enableGpioG();
@@ -207,6 +215,7 @@ int main(void)
   gpioConfigAltFunc(GpioA,8,AF8);
 
   enableUsart1();			//Enable usart
+  UsartDmaTxEn();
   configureUsart1();		//Configure the Usart
   setBaudRate(0x30,0xd); 	//Set baud rate to 115200 and freq is 90MHz
   enableTransmit();			//Enable transmit data
@@ -219,7 +228,8 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  stringReceive(&message);
+	  serialPrint("value : %d%s\n",486," tuturu~" );
+	 /* stringReceive(&message);
 	  // turn on = on led
 	  // turn off = off led
 	  // blink = blink led 1 time
@@ -253,7 +263,7 @@ int main(void)
 		  	 gpioWrite(GpioG,greenLedPin,0);
 		  	  break;
 	  default:gpioWrite(GpioG,greenLedPin,0);
-	  }
+	  }*/
 	 /* writeData("H");
 	  writeData("S");
 	  writeData("H");

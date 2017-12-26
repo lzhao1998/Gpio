@@ -25,11 +25,13 @@ Src/main.o: ../Src/main.c C:/ZheHao/STM32/Gpio/Inc/main.h \
  C:/ZheHao/STM32/Gpio/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h \
  C:/ZheHao/STM32/Gpio/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
  C:/ZheHao/STM32/Gpio/Inc/Gpio.h C:/ZheHao/STM32/Gpio/Inc/Rcc.h \
- C:/ZheHao/STM32/Gpio/Inc/Rng.h C:/ZheHao/STM32/Gpio/Inc/Nvic.h \
- C:/ZheHao/STM32/Gpio/Inc/SysTick.h C:/ZheHao/STM32/Gpio/Inc/EXTI.h \
- C:/ZheHao/STM32/Gpio/Inc/Timer.h C:/ZheHao/STM32/Gpio/Inc/DbgMcu.h \
- C:/ZheHao/STM32/Gpio/Inc/I2C.h C:/ZheHao/STM32/Gpio/Inc/flash.h \
- C:/ZheHao/STM32/Gpio/Inc/usart.h C:/ZheHao/STM32/Gpio/Inc/DbgMcu.h
+ C:/ZheHao/STM32/Gpio/Inc/Common.h C:/ZheHao/STM32/Gpio/Inc/Rng.h \
+ C:/ZheHao/STM32/Gpio/Inc/Nvic.h C:/ZheHao/STM32/Gpio/Inc/SysTick.h \
+ C:/ZheHao/STM32/Gpio/Inc/EXTI.h C:/ZheHao/STM32/Gpio/Inc/Timer.h \
+ C:/ZheHao/STM32/Gpio/Inc/DbgMcu.h C:/ZheHao/STM32/Gpio/Inc/I2C.h \
+ C:/ZheHao/STM32/Gpio/Inc/flash.h C:/ZheHao/STM32/Gpio/Inc/usart.h \
+ C:/ZheHao/STM32/Gpio/Inc/DbgMcu.h C:/ZheHao/STM32/Gpio/Inc/Dma.h \
+ C:/ZheHao/STM32/Gpio/Inc/Rcc.h C:/ZheHao/STM32/Gpio/Inc/usart.h
 
 C:/ZheHao/STM32/Gpio/Inc/main.h:
 
@@ -87,6 +89,8 @@ C:/ZheHao/STM32/Gpio/Inc/Gpio.h:
 
 C:/ZheHao/STM32/Gpio/Inc/Rcc.h:
 
+C:/ZheHao/STM32/Gpio/Inc/Common.h:
+
 C:/ZheHao/STM32/Gpio/Inc/Rng.h:
 
 C:/ZheHao/STM32/Gpio/Inc/Nvic.h:
@@ -106,3 +110,9 @@ C:/ZheHao/STM32/Gpio/Inc/flash.h:
 C:/ZheHao/STM32/Gpio/Inc/usart.h:
 
 C:/ZheHao/STM32/Gpio/Inc/DbgMcu.h:
+
+C:/ZheHao/STM32/Gpio/Inc/Dma.h:
+
+C:/ZheHao/STM32/Gpio/Inc/Rcc.h:
+
+C:/ZheHao/STM32/Gpio/Inc/usart.h:
