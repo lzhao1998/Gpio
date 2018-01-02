@@ -32,7 +32,8 @@ Src/main.o: ../Src/main.c C:/ZheHao/STM32/Gpio/Inc/main.h \
  C:/ZheHao/STM32/Gpio/Inc/I2C.h C:/ZheHao/STM32/Gpio/Inc/flash.h \
  C:/ZheHao/STM32/Gpio/Inc/usart.h C:/ZheHao/STM32/Gpio/Inc/DbgMcu.h \
  C:/ZheHao/STM32/Gpio/Inc/Dma.h C:/ZheHao/STM32/Gpio/Inc/usart.h \
- C:/ZheHao/STM32/Gpio/Inc/Timer.h
+ C:/ZheHao/STM32/Gpio/Inc/Timer.h C:/ZheHao/STM32/Gpio/Inc/ADC.h \
+ C:/ZheHao/STM32/Gpio/Inc/Gpio.h
 
 C:/ZheHao/STM32/Gpio/Inc/main.h:
 
@@ -119,3 +120,7 @@ C:/ZheHao/STM32/Gpio/Inc/Dma.h:
 C:/ZheHao/STM32/Gpio/Inc/usart.h:
 
 C:/ZheHao/STM32/Gpio/Inc/Timer.h:
+
+C:/ZheHao/STM32/Gpio/Inc/ADC.h:
+
+C:/ZheHao/STM32/Gpio/Inc/Gpio.h:

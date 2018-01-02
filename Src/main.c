@@ -52,10 +52,12 @@
 #include "flash.h"
 #include "usart.h"
 #include "Dma.h"
+#include "ADC.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <math.h>
 #include <stm32f4xx.h>
 
 #define greenLedPin		13
@@ -225,7 +227,7 @@ int main(void)
   char *message = (char*)malloc(sizeof(char) * 100);*/
 
   //Timer8 (input capture and output compare)
-  enableDMA(DMA2_DEV);
+  /*enableDMA(DMA2_DEV);
   initDmaForTimer8();
   enableGpioC();
   gpioConfig(GpioC,6, GPIO_MODE_AF, GPIO_PUSH_PULL, GPIO_NO_PULL,GPIO_VHI_SPEED );
@@ -235,13 +237,21 @@ int main(void)
   gpioConfig(GpioC,9, GPIO_MODE_AF, GPIO_PUSH_PULL, GPIO_NO_PULL,GPIO_VHI_SPEED );
   gpioConfigAltFunc(GpioC,9,AF3);//for timer8 ch4(for input compare)
   //initTimer8ForInputCaptureAndOutputCompare();
-  initTimer8ForDMA();
+  initTimer8ForDMA();*/
 
+  //ADC
+  ADC1Enable();
+  ConfigADC();
+  int data;
+  float result;
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
+	  data = adc1->DR;
+	  //double voltage = changeValueToVolage(data);
+	  result = (3.3 * data) / 4096;
+	  printf("%f\n",result);
 	 // toggleOutCompareChannel1WithForce(0);
 	  //serialPrint("value : %d%s\n",486," tuturu~" );
 	 /* stringReceive(&message);
