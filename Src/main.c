@@ -53,6 +53,7 @@
 #include "usart.h"
 #include "Dma.h"
 #include "ADC.h"
+#include "IWDG.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -134,10 +135,10 @@ int main(void)
   //sysTickDisable();
 
   //Enable Gpio
-  /*enableGpioA();
+  enableGpioA();
   enableGpioB();
   enableGpioF();
-  enableGpioG();*/
+  enableGpioG();
 
   //Enable random number generator
   /*enableRng();*/
@@ -150,9 +151,9 @@ int main(void)
   /*getRandomNumberByInterrupt();*/
 
   //Configure the Gpio
-  /*gpioConfig(GpioA, blueButtonPin, GPIO_MODE_IN, 0, GPIO_NO_PULL, 0);
+  gpioConfig(GpioA, blueButtonPin, GPIO_MODE_IN, 0, GPIO_NO_PULL, 0);
   gpioConfig(GpioG, redLedPin, GPIO_MODE_OU, GPIO_PUSH_PULL, GPIO_NO_PULL, GPIO_HI_SPEED);
-  gpioConfig(GpioG, greenLedPin, GPIO_MODE_OU, GPIO_PUSH_PULL, GPIO_NO_PULL, GPIO_LOW_SPEED);*/
+  gpioConfig(GpioG, greenLedPin, GPIO_MODE_OU, GPIO_PUSH_PULL, GPIO_NO_PULL, GPIO_LOW_SPEED);
 
 
   //Configure GPIOA pin 8 as MCO1 (push-pull with no-pull at very
@@ -165,7 +166,6 @@ int main(void)
 
   //I2C
   /*initI2C();
-
   haltI2C1WhenDebug();
   haltI2C2WhenDebug();*/
 
@@ -240,18 +240,65 @@ int main(void)
   initTimer8ForDMA();*/
 
   //ADC
-  ADC1Enable();
+  /*ADC1Enable();
   ConfigADC();
   int data;
-  float result;
+  float result;*/
+
+  //IWDG
+  /*printCauseOfReset();
+  HAL_Delay(1000); //wait
+  iwdgStartWatchdog();
+  iwdgEnableConfiguration();
+  iwdgSetReloadValue(2000);
+  iwdgSetPrescaleValue(IWDG_DIV_64);
+  waitCounterValueUpdate();
+  waitPrescaleValueUpdate();
+  iwdgResetWatchdog();
+  clearResetFlag();*/
+
+  //WWDG
+  printCauseOfReset();
+  clearResetFlag();
+
+  /*while(i++ < 20)
+  {
+	  gpioWrite(GpioG,greenLedPin,1);
+	  HAL_Delay(50);
+	  gpioWrite(GpioG,greenLedPin,0);
+	  HAL_Delay(50);
+  }*/
+  enableWatchdog();
+  /*//PART1
+  configWWDG(63);
+  setWindowValue(28);*/
+
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  data = adc1->DR;
+	  //WWDG
+	  /*//PART1
+	  HAL_Delay(6);
+	  configWWDG(63);*/
+	  gpioWrite(GpioG,greenLedPin,1);
+	  WwdgTimer500ms();
+	  gpioWrite(GpioG,greenLedPin,0);
+	  WwdgTimer500ms();
+
+	  //IWDG
+	  /*gpioWrite(GpioG,greenLedPin,1);
+	  HAL_Delay(50);
+	  gpioWrite(GpioG,greenLedPin,0);
+	  HAL_Delay(50);*/
+
+
+	  //ADC
+	/*  data = adc1->DR;
 	  //double voltage = changeValueToVolage(data);
 	  result = (3.3 * data) / 4096;
-	  printf("%f\n",result);
+	  printf("%f\n",result);*/
 	 // toggleOutCompareChannel1WithForce(0);
 	  //serialPrint("value : %d%s\n",486," tuturu~" );
 	 /* stringReceive(&message);

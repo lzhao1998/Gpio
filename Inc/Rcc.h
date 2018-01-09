@@ -85,6 +85,16 @@ extern uint32_t *rccAhb1En;
 	Rcc->CFGR |= (x << 24);			\
 }
 
+// Control & status register (CSR)
+#define RCC_LPWRRSTF	(1 << 31)
+#define RCC_WWDGRSTF	(1 << 30)
+#define RCC_IWDGRSTF	(1 << 29)
+#define RCC_SFTRSTF		(1 << 28)
+#define RCC_PORRSTF		(1 << 27)
+#define RCC_PINRSTF		(1 << 26)
+#define RCC_BORRSTF		(1 << 25)
+#define RCC_RMVF		(1 << 24)
+
 //enable timer8
 void enableTimer8(void);
 
@@ -109,4 +119,10 @@ void disableUsart1(void);
 void enableDMA(int dmaNumber);
 void disableDMA1andDMA2(void);
 
+//enable watchdog
+void enableWatchdog(void);
+
+//reset type
+void printCauseOfReset();
+void clearResetFlag();
 #endif /* RCC_H_ */

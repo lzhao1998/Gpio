@@ -85,3 +85,36 @@ void disableDMA1andDMA2(void)
 	Rcc->AHB1ENR &= ~(0x11 << 21);
 }
 
+void enableWatchdog(void)
+{
+	Rcc->APB1RSTR &= ~(1 << 11);
+	Rcc->APB1ENR |= (1 << 11);
+}
+
+void clearResetFlag()
+{
+	Rcc->CSR |= RCC_RMVF;
+}
+
+
+void printCauseOfReset()
+{
+	  printf("Reset type:");
+	  if(Rcc->CSR & RCC_LPWRRSTF)
+		  printf("Low Power Reset\n");
+	  if(Rcc->CSR & RCC_WWDGRSTF)
+		  printf("Window Watchdog Reset\n");
+	  if(Rcc->CSR & RCC_IWDGRSTF)
+		  printf("Independent Watchdog Reset\n");
+	  if(Rcc->CSR & RCC_SFTRSTF)
+		  printf("Software Reset\n");
+	  if(Rcc->CSR & RCC_PORRSTF)
+	  	  printf("Power On Reset\n");
+	  if(Rcc->CSR & RCC_PINRSTF)
+	  	  printf("Nrst pin Reset\n");
+	  if(Rcc->CSR & RCC_BORRSTF)
+		  printf("BOR Reset\n");
+	  if(Rcc->CSR & RCC_RMVF)
+		  printf("Remove Reset\n");
+		//  printf("No reset\n");
+}
